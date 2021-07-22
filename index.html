@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <svg class = "point-cloud" viewBox = "-12 -12 24 24">
+
+    <g id = "pc"></g>
+    </svg>
+  </body>
+  <script type="module">
+    import {Vector3} from "./Vector3.js"
+    let points = document.getElementById("pc")
+    let t = 0;
+let init = 0;
+
+    let next = () => {
+      // if (init++ > 2) {
+      //   points.removeChild(points.children[0]);
+      //   points.removeChild(points.children[1]);
+      // }
+      points.innerHTML = "";
+
+      let path = `<path style = "opacity: ${Math.sin(t/3)*0.3+0.4}" class = 'p1' d = `
+      let path2 = `<path class = 'p2' d = `
+
+      for (let x = -10; x < 10; x+= 0.35){
+        for (let y = -10; y < 10; y+= 0.35) {
+          if (x*x + y*y < 100) {
+            let s = Math.sin(t)*10;
+
+            let x2 = x+0.35*Math.sin(t)/2;
+            let y2 = y +0.35*Math.cos(t)/2;
+            let z = 3*Math.sin((1+Math.sin(t/10))*2.3*Math.sqrt(x*x + y*y + s*s))/Math.sqrt(x*x + y*y + s*s);
+            let z2 = 5*Math.sin((1+Math.sin(t/10))*2*Math.sqrt(x2*x2 + y2*y2 + s*s))/Math.sqrt(x2*x2 + y2*y2 + s*s);
+            z2 = z2*Math.sin(t)*3;
+
+            let v = new Vector3(x,y,z);
+            let v2 = new Vector3(x2,y2,z2);
+            v = v.rotateZ(Math.PI*Math.sin(t/19)*2).rotateY(Math.PI*Math.cos(t/13)).rotateX(Math.PI*Math.cos(t/17))
+            v2 = v2.rotateZ(Math.PI*Math.sin(t/19)*2).rotateY(Math.PI*Math.cos(t/13)).rotateX(Math.PI*Math.cos(t/17))
+
+            path += `M${v.x},${v.y}L${v.x},${v.y}`
+            path2 += `M${v2.x},${v2.y}L${v2.x},${v2.y}`
+          }
+          // points.add(v.rotate(new Vector3(Math.PI/4, t/20, Math.PI/4)));
+        }
+        // points.rotation = new Vector3(Math.PI/4, 0, t);
+      }
+      points.innerHTML += path2 + "></path>"
+      points.innerHTML += path + "></path>"
+      t+=0.02;
+      window.requestAnimationFrame(next)
+    }
+    next();
+
+
+  </script>
+  <style>
+    body{
+      background:black;
+    }
+    svg{
+      max-height: 100vh;
+      max-width: 100vw;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .p2 {
+      stroke:#ff7f00;
+    }
+    .p1 {
+      stroke:white;
+    }
+    .point-cloud path {
+      /* filter: url(#red-glow); */
+      /* stroke: white; */
+      stroke-linecap:round;
+      stroke-width: 0.175;
+    }
+  </style>
+</html>
