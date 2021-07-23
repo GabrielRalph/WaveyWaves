@@ -14,8 +14,9 @@
     import {Vector3} from "./Vector3.js"
     let points = document.getElementById("pc")
     let t = 0;
-let init = 0;
-
+    let init = 0;
+    let rotx = 0;
+    let roty = 0;
     let next = () => {
       // if (init++ > 2) {
       //   points.removeChild(points.children[0]);
@@ -39,8 +40,8 @@ let init = 0;
 
             let v = new Vector3(x,y,z);
             let v2 = new Vector3(x2,y2,z2);
-            v = v.rotateZ(Math.PI*Math.sin(t/19)*2).rotateY(Math.PI*Math.cos(t/13)).rotateX(Math.PI*Math.cos(t/17))
-            v2 = v2.rotateZ(Math.PI*Math.sin(t/19)*2).rotateY(Math.PI*Math.cos(t/13)).rotateX(Math.PI*Math.cos(t/17))
+            v = v.rotateZ(Math.PI*Math.sin(t/19)*2).rotateY(rotx).rotateX(roty)
+            v2 = v2.rotateZ(Math.PI*Math.sin(t/19)*2).rotateY(rotx).rotateX(roty)
 
             path += `M${v.x},${v.y}L${v.x},${v.y}`
             path2 += `M${v2.x},${v2.y}L${v2.x},${v2.y}`
@@ -55,6 +56,14 @@ let init = 0;
       window.requestAnimationFrame(next)
     }
     next();
+    // window.onmousedown = ()
+    window.onmousemove = (e) => {
+      if (e.buttons) {
+
+        rotx += e.movementX/200;
+        roty -= e.movementY/200;
+      }
+    }
 
 
   </script>
