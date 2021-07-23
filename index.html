@@ -14,7 +14,6 @@
     import {Vector3} from "./Vector3.js"
     let points = document.getElementById("pc")
     let t = 0;
-    let init = 0;
     let rotx = 0;
     let roty = 0;
     let next = () => {
@@ -55,11 +54,11 @@
       t+=0.02;
       window.requestAnimationFrame(next)
     }
+    window.onerror = (e) => {console.log(e);}
     next();
     // window.onmousedown = ()
     window.onmousemove = (e) => {
       if (e.buttons) {
-
         rotx += e.movementX/200;
         roty -= e.movementY/200;
       }
@@ -75,13 +74,15 @@
       let touch = e.touches[0];
       if (init) {
         lx = touch.clientX;
-        ly = touch.clienty;
+        ly = touch.clientY;
         init = false;
       }
       let x = touch.clientX;
       let y = touch.clientY;
-      rotx += (x - lx)/200;
-      roty += (y - ly)/200;
+      let dx = (x - lx)/400;
+      let dy = (y - ly)/400;
+      rotx += dx;
+      roty -= dy;
       lx = x;
       ly = y;
     }
