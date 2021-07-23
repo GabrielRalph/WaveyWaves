@@ -65,11 +65,29 @@
       }
     }
 
+    let lx = -2;
+    let ly = -2;
+    window.ontouchstart = (e) => {
+      let touch = e.touches[0];
+      let lx = touch.clientX;
+      let ly = touch.clienty;
+    }
+    window.ontouchmove = (e) => {
+      let touch = e.touches;
+      let x = touch.clientX;
+      let y = touch.clientY;
+      rotx += (x - lx)/200;
+      roty += (y - ly)/200;
+      lx = x;
+      ly = y;
+    }
+
 
   </script>
   <style>
     body{
       background:black;
+      overflow: hidden;
     }
     svg{
       max-height: 100vh;
