@@ -65,15 +65,19 @@
       }
     }
 
-    let lx = -2;
-    let ly = -2;
+    let lx = 0;
+    let ly = 0;
+    let init = 0;
     window.ontouchstart = (e) => {
-      let touch = e.touches[0];
-      lx = touch.clientX;
-      ly = touch.clienty;
+      init = true;
     }
     window.ontouchmove = (e) => {
       let touch = e.touches[0];
+      if (init) {
+        lx = touch.clientX;
+        ly = touch.clienty;
+        init = false;
+      }
       let x = touch.clientX;
       let y = touch.clientY;
       rotx += (x - lx)/200;
