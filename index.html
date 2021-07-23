@@ -73,7 +73,7 @@
       let ly = touch.clienty;
     }
     window.ontouchmove = (e) => {
-      let touch = e.touches;
+      let touch = e.touches[0];
       let x = touch.clientX;
       let y = touch.clientY;
       rotx += (x - lx)/200;
